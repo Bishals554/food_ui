@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:foodui/constant/color.dart';
+import 'package:foodui/model/food.dart';
 import 'package:foodui/screen/detail_page.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,107 +58,42 @@ class HomePage extends StatelessWidget {
             Container(
               margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               height: 180,
-              child: ListView(
+              child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                  physics: BouncingScrollPhysics(),
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: redColor,
-                        borderRadius: BorderRadius.circular(15)
-                      ),
-                      width: 100,
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Image.asset('assets/images/burger.png'),
-                          ),
-                          Text('Burger', style: TextStyle(color: Colors.white, fontSize: 20),),
-                          SizedBox(height: 10,),
-                          Container(
-                            decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text('>',style: TextStyle(fontSize: 30, color: Colors.red),),
-                              ))
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: 15,),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
+                itemCount: foods.length,
+                  itemBuilder: (context, index){
+                    return GestureDetector(
+                      onTap: (){
+                       setState(() {
+                         selectedIndex = index;
+                       });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: index == selectedIndex ? Colors.red : Colors.white,
                           borderRadius: BorderRadius.circular(15)
-                      ),
-                      width: 100,
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10, right: 8, left: 8, bottom: 26),
-                            child: Image.asset('assets/images/pizza.png'),
-                          ),
-                          Text('Pizza', style: TextStyle(color: Colors.black, fontSize: 20),),
-                          SizedBox(height: 10,),
-                          Container(
-                              decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.black),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text('>',style: TextStyle(fontSize: 30, color: Colors.white),),
-                              ))
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: 10,),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15)
-                      ),
-                      width: 100,
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Image.asset('assets/images/cake.png',height: 75,),
-                          ),
-                          Text('Burger', style: TextStyle(color: Colors.black, fontSize: 20),),
-                          SizedBox(height: 10,),
-                          Container(
-                              decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.black),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text('>',style: TextStyle(fontSize: 30, color: Colors.white),),
-                              ))
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: 10,),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15)
-                      ),
-                      width: 100,
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Image.asset('assets/images/burger.png'),
-                          ),
-                          Text('Burger', style: TextStyle(color: Colors.white, fontSize: 20),),
-                          SizedBox(height: 10,),
-                          Container(
-                              decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text('>',style: TextStyle(fontSize: 30, color: Colors.red),),
-                              ))
-                        ],
-                      ),
-                    ),
-                  ],
+                        ),
+                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        width: 100,
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Image.asset(foods[index].imageUrl, height: 70,fit: BoxFit.cover,),
+                            ),
+                            Text(foods[index].foodName, style: TextStyle(color: index == selectedIndex ? Colors.white : Colors.black, fontSize: 20),),
+                            Container(
+                                decoration: BoxDecoration(shape: BoxShape.circle, color: index == selectedIndex ? Colors.white : Colors.black ,),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text('>',style: TextStyle(fontSize: 30, color: index == selectedIndex ? Colors.red : Colors.white,),),
+                                ))
+                          ],
+                        ),
 
+                      ),
+                    );
+                  }
               ),
             ),
             Row(
