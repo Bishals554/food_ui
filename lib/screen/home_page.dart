@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                          color: index == selectedIndex ? Colors.red : Colors.white,
+                          color: index == selectedIndex ? redColor : Colors.white,
                           borderRadius: BorderRadius.circular(15)
                         ),
                         margin: EdgeInsets.symmetric(horizontal: 10),
